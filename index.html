@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shimoe Koharu</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         html, body {
             margin: 0;
@@ -69,20 +70,14 @@
         const clickSound = document.getElementById('clickSound');
         const rareSound = document.getElementById('rareSound');
 
-        // Placeholder sprite paths - replace with your actual file paths
         const SPRITE_DEFAULT = 'img/koharu_spr_1.png';
         const SPRITE_CLICK_1 = 'img/koharu_spr_2.png';
         const SPRITE_CLICK_2 = 'img/koharu_spr_3.png';
         const SPRITE_RARE = 'img/koharu_spr_4.png';
 
-        // Chance (0 to 1) that the rare shake pattern plays instead of the normal one
-        const RARE_CHANCE = 0.05; // 5%
-
-        let isAnimating = false;
+        const RARE_CHANCE = 0.05;
 
         sprite.addEventListener('click', () => {
-            // if (isAnimating) return;
-            // isAnimating = true;
 
             if (Math.random() < RARE_CHANCE) {
                 playRarePattern();
@@ -92,49 +87,35 @@
         });
 
         function playNormalPattern() {
-            // Play sound
             clickSound.currentTime = 0;
             clickSound.play().catch(() => {});
 
-            // Jump animation
             sprite.classList.remove('jump', 'shake');
-            void sprite.offsetWidth; // force reflow so animation can replay
+            void sprite.offsetWidth;
             sprite.classList.add('jump');
 
-            // Change to second sprite immediately
             sprite.src = SPRITE_CLICK_1;
 
-            // After 0.5s, change to third sprite
             setTimeout(() => {
                 sprite.src = SPRITE_CLICK_2;
-
-                // After random 1-3s, change back to default
                 const randomDelay = (500 + Math.random() * 1500);
                 setTimeout(() => {
                     sprite.src = SPRITE_DEFAULT;
-                    // isAnimating = false;
                 }, randomDelay);
             }, 200);
         }
 
         function playRarePattern() {
-            // Play rare sound
             rareSound.currentTime = 0;
             rareSound.play().catch(() => {});
 
-            // Shake animation
             sprite.classList.remove('jump', 'shake');
-            void sprite.offsetWidth; // force reflow so animation can replay
+            void sprite.offsetWidth;
             sprite.classList.add('shake');
-
-            // Change to rare sprite immediately
             sprite.src = SPRITE_RARE;
-
-            // After random 1-3s, change back to default
             const randomDelay = (1 + Math.random() * 2) * 1000;
             setTimeout(() => {
                 sprite.src = SPRITE_DEFAULT;
-                // isAnimating = false;
             }, randomDelay);
         }
 
