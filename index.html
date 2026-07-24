@@ -78,7 +78,6 @@
         const RARE_CHANCE = 0.05;
 
         sprite.addEventListener('click', () => {
-
             if (Math.random() < RARE_CHANCE) {
                 playRarePattern();
             } else {
@@ -88,6 +87,7 @@
 
         function playNormalPattern() {
             clickSound.currentTime = 0;
+            clickSound.volume = 0.7;
             clickSound.play().catch(() => {});
 
             sprite.classList.remove('jump', 'shake');
@@ -107,6 +107,7 @@
 
         function playRarePattern() {
             rareSound.currentTime = 0;
+            rareSound.volume = 0.7;
             rareSound.play().catch(() => {});
 
             sprite.classList.remove('jump', 'shake');
